@@ -6,7 +6,7 @@ export const QueryStore = signalStore(
   {providedIn: 'root'},
   withState(initialQuerySlice),
   withComputed(() => ({
-    userFields: computed(() => ['Name', 'Age', 'Email', 'Address']),
+    userFields: computed(() => ['ID', 'Name', 'Username', 'Email', 'Client', 'Role']),
     conditions: computed(() => ['Contains', 'Exists', 'Length', 'Includes']),
   })),
   withMethods((store) => ({

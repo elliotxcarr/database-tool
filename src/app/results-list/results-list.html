@@ -1,0 +1,29 @@
+<div class="flex flex-col w-full h-full bg-white shadow-md rounded-xl p-6 ">
+  <!-- Header Row -->
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-2xl font-semibold">Query Results</h2>
+    <span class="text-gray-500 text-sm">{{store.results().length}} records found</span>
+  </div>
+
+  <!-- Table Wrapper -->
+  <div class="overflow-x-auto overflow-y-scroll">
+    <table class="min-w-full text-left border-collapse">
+      <thead>
+        <tr class="text-gray-700 border-b">
+        @for (item of store.userFields(); track $index) {
+          <th class="py-3 px-2 font-semibold">{{item}}</th>
+        }
+        </tr>
+      </thead>
+      <tbody class="text-gray-700">
+        @for (item of store.results(); track $index) {
+        <tr class="border-b hover:bg-gray-50 hover:cursor-pointer">
+          @for (field of store.userFields(); track $index) {
+          <td class="py-3 px-2">{{item[field.toLowerCase()]}}</td>
+          }
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
