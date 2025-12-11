@@ -1,0 +1,21 @@
+<div class="flex flex-row justify-between py-1 mx-2">
+  @if (!store.isFirstStatement(index)) {
+  <div class="text-center self-center ml-2">AND</div>
+  }
+  <select class="bg-gray-100 rounded-sm p-1">
+    @for (option of store.userFields(); track $index) {
+    <option value="{{option}}">{{option}}</option>
+    }
+  </select>
+  <select class="bg-gray-100 rounded-sm p-1">
+    @for (option of store.conditions(); track $index) {
+    <option value="{{option}}">{{option}}</option>
+    }
+  </select>
+  <input type="text" placeholder="Value" class="w-3/5 bg-gray-100 rounded-sm p-1" />
+  @if (store.queries().length >1) {
+  <button class="text-red-700 " (click)="store.removeStatement(index)">
+    <img src="delete.svg" class=""/>
+  </button>
+  }
+</div>

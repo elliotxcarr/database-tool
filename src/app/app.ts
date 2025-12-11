@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { QueryComponent } from "./query-component/query-component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [ QueryComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

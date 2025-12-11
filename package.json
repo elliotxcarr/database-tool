@@ -32,6 +32,7 @@
     "@angular/platform-server": "^21.0.0",
     "@angular/router": "^21.0.0",
     "@angular/ssr": "^21.0.2",
+    "@ngrx/signals": "^20.1.0",
     "express": "^5.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
@@ -48,5 +49,26 @@
     "tailwindcss": "^4.1.12",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
+  },
+  "overrides": {
+    "@angular-architects/ngrx-toolkit": {
+      "@angular/common": "$@angular/common",
+      "@angular/core": "$@angular/core"
+    },
+    "@ngrx/signals": {
+      "@angular/core": "$@angular/core"
+    },
+    "@ngrx/effects": {
+      "@angular/core": "$@angular/core"
+    },
+    "@ngrx/entity": {
+      "@angular/core": "$@angular/core"
+    },
+    "@ngrx/store": {
+      "@angular/core": "$@angular/core"
+    },
+    "@ngrx/store-devtools": {
+      "@angular/core": "$@angular/core"
+    }
   }
 }
