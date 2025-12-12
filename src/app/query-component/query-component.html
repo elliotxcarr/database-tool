@@ -1,11 +1,35 @@
 <div class="flex flex-col bg-gray-200 w-full h-full p-5">
-    <div class="p-3">
-      <h1 class="text-2xl font-semibold">Query Conditions</h1>
-    </div>
-      @for (query of store.queries(); track $index) {
-      <app-statement [index]="$index" />
+  <div class="p-3">
+    <h1 class="text-2xl font-semibold">Query Conditions</h1>
+  </div>
+  @for (query of store.queries(); track $index) {
+  <div class="flex flex-row justify-between py-2 mx-2">
+    @if (!store.isFirstStatement($index)) {
+    <div class="text-center self-center ml-2">AND</div>
+    }
+    <select class="bg-gray-100 rounded-sm p-1" [(ngModel)]="query.field">
+      @for (option of store.userFields(); track $index) {
+      <option [value]="fields[option]">{{option}}</option>
       }
-    <button class="m-2 p-1 rounded-md bg-gray-100 w-1/5" (click)="store.addStatement()">
-      + Add Condition
+    </select>
+    <select class="bg-gray-100 rounded-sm p-1" [(ngModel)]="query.condition">
+      @for (option of store.conditions(); track $index) {
+      <option [value]="conditions[option]">{{option}}</option>
+      }
+    </select>
+    <input type="text" placeholder="Value" [(ngModel)]="query.value" class="w-3/5 bg-gray-100 rounded-sm p-1" />
+    @if (store.queries().length >1) {
+    <button class="text-red-700" (click)="store.removeStatement($index)">
+      <img src="delete.svg" class="" />
     </button>
+    }
+  </div>
+  }
+  <button class="m-2 p-1 rounded-md bg-gray-100 w-1/5" (click)="store.addStatement()">
+    + Add Condition
+  </button>
+  <button class="p-3 bg-blue-500 text-lg text-white self-end rounded-sm drop-shadow-lg hover:cursor-pointer"
+    (click)="store.runClicked()">
+    Run Query
+  </button>
 </div>

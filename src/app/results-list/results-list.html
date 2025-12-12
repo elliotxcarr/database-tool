@@ -8,18 +8,18 @@
       <thead class="bg-white sticky top-0 z-10">
         <tr class="text-gray-700 border-b">
           @for (item of store.userFields(); track $index) {
-          <th class="py-3 px-2 font-semibold">{{item}}</th>
+          <th class="py-3 px-2 font-semibold max-w-8">{{item}}</th>
         }
         </tr>
       </thead>
     </table>
-    <div class="max-h-screen overflow-y-auto ">
+    <div class="max-h-screen overflow-y-auto">
       <table class="min-w-full border-collapse">
         <tbody class="text-gray-700 overflow-y-scroll max-h-screen ">
           @for (item of store.results(); track $index) {
           <tr class="border-b hover:bg-gray-50 hover:cursor-pointer">
             @for (field of store.userFields(); track $index) {
-            <td class="py-3 px-2">{{item[field.toLowerCase()]}}</td>
+            <td class="py-3 px-2 overflow-hidden whitespace-nowrap text-ellipsis max-w-8">{{item[fields[field]]}}</td>
             }
           </tr>
           }
