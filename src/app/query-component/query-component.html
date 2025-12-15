@@ -8,13 +8,13 @@
     <div class="text-center self-center ml-2">AND</div>
     }
     <select class="bg-gray-100 rounded-sm p-1" [(ngModel)]="query.field">
-      @for (option of store.userFields(); track $index) {
-      <option [value]="fields[option]">{{option}}</option>
+      @for (option of store.currentFieldOptions(); track $index) {
+      <option [value]="store.currentFields()[option]">{{option}}</option>
       }
     </select>
     <select class="bg-gray-100 rounded-sm p-1" [(ngModel)]="query.condition">
-      @for (option of store.conditions(); track $index) {
-      <option [value]="conditions[option]">{{option}}</option>
+      @for (option of store.conditionOptions(); track $index) {
+      <option [value]="store.conditionz()[option]">{{option}}</option>
       }
     </select>
     <input type="text" placeholder="Value" [(ngModel)]="query.value" class="w-3/5 bg-gray-100 rounded-sm p-1" />

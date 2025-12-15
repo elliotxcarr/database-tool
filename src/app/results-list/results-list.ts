@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { fieldsDict, QueryStore } from '../store/query.store';
+import { QueryStore } from '../store/query.store';
 
 @Component({
   selector: 'app-results-list',
@@ -9,5 +9,4 @@ import { fieldsDict, QueryStore } from '../store/query.store';
 })
 export class ResultsList {
   readonly store = inject(QueryStore);
-  fields = fieldsDict;
 }

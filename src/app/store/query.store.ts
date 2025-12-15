@@ -1,9 +1,10 @@
 import { patchState, signalStore, type, withComputed, withMethods, withProps, withState } from "@ngrx/signals";
 import { initialQuerySlice, QuerySlice, reqBody, Result } from "./query.slice";
-import { computed, inject } from "@angular/core";
+import { computed, inject, Signal } from "@angular/core";
 import { Dispatcher, eventGroup } from "@ngrx/signals/events";
 import { withQueryEffects } from "./query.effects";
 import { withQueryReducer } from "./query.reducer";
+import { conditionsDict, userFieldsDict, vesselFieldsDict } from "../data/dbFields";
 
 export const queryEvents = eventGroup({
   source: 'Query',
@@ -14,32 +15,29 @@ export const queryEvents = eventGroup({
   }
 })
 
-export const conditionsDict: Record<string, string> = {
-  'Contains': 'contains',
-  'Equals' : 'equals',
-  'Not Equal': 'ne',
-  'Includes': 'in',
-  'Exisits': 'exists'
-}
-
-export const fieldsDict: Record<string, string> = {
-  'Name': 'name',
-  'ID' : '_id',
-  'Username': 'username',
-  'Email': 'email',
-  'Role' : 'role'
-}
-
 export const QueryStore = signalStore(
   {providedIn: 'root'},
   withState(initialQuerySlice),
   withProps(_ => ({
     _dispatcher: inject(Dispatcher),
   })),
-  withComputed(() => ({
-    userFields: computed(() => Object.keys(fieldsDict)),
-    conditions: computed(() => Object.keys(conditionsDict)),
-  })),
+  withComputed((store) => {
+    const currentFields = computed<Record<string, string>>(() => {
+      if(store.db() === 'user') return userFieldsDict;
+      if(store.db() === 'vessel') return vesselFieldsDict;
+      return {}
+    })
+    const currentFieldOptions = computed(() => Object.keys(currentFields()))
+    const conditionz = computed(() => conditionsDict);
+    const conditionOptions = computed(() => Object.keys(conditionz()))
+    return {
+      currentFields,
+      currentFieldOptions,
+      conditionz,
+      conditionOptions
+    }
+  }
+  ),
   withQueryEffects(),
   withQueryReducer(),
   withMethods((store) => ({
@@ -49,6 +47,8 @@ export const QueryStore = signalStore(
     setResults: (res:any) => patchState(store, {results: res}),
     runClicked: () =>{
       const body = {
+        db: 'user',
+        env: 'LOCAL',
         groupType : 'AND',
         conditions: store.queries()
       }

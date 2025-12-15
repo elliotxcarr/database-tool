@@ -6,6 +6,8 @@ export interface QueryRow {
 
 export interface QuerySlice {
   queries: QueryRow[];
+  db: string,
+  env: string;
   results: any[];
   error: string
 }
@@ -21,6 +23,8 @@ export interface Result {
 
 export const initialQuerySlice: QuerySlice = {
   queries: [{field:'', condition: '', value:''}],
+  db: 'user',
+  env: 'LOCAL',
   results: [],
   error: ''
 }

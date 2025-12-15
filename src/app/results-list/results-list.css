@@ -1,0 +1,4 @@
+@import "tailwindcss";
+td{
+  @apply py-3 px-2 overflow-hidden whitespace-nowrap text-ellipsis max-w-8
+}

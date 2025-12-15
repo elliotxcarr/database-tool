@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { conditionsDict, fieldsDict, QueryStore } from '../store/query.store';
+import { QueryStore } from '../store/query.store';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -10,6 +10,4 @@ import { FormsModule } from '@angular/forms';
 })
 export class QueryComponent {
   readonly store = inject(QueryStore);
-  conditions: Record<string,string> = conditionsDict;
-  fields: Record<string, string> = fieldsDict;
 }
