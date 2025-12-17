@@ -7,7 +7,7 @@
     <table class="min-w-full text-left border-collapse">
       <thead class="bg-white sticky top-0 z-10">
         <tr class="text-gray-700 border-b">
-          @for (item of store.currentFieldOptions(); track $index) {
+          @for (item of store.currentFieldOptions().slice(0,4); track $index) {
           <th class="py-3 px-2 font-semibold max-w-8">{{item}}</th>
         }
         </tr>
@@ -18,8 +18,8 @@
         <tbody class="text-gray-700 overflow-y-scroll max-h-screen">
           @for (item of store.results(); track $index) {
           <tr class="border-b hover:bg-gray-50 hover:cursor-pointer">
-            @for (field of store.currentFieldOptions(); track $index) {
-            <td>{{item[store.currentFields()[field]]}}</td>
+            @for (field of store.currentFieldOptions().slice(0,4); track $index) {
+            <td>{{store.getValue(item, field) }}</td>
             }
           </tr>
           }
