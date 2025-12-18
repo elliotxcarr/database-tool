@@ -18,8 +18,8 @@
         <tbody class="text-gray-700 overflow-y-scroll max-h-screen">
           @for (item of store.results(); track $index) {
           <tr class="border-b hover:bg-gray-50 hover:cursor-pointer">
-            @for (field of store.currentFieldOptions().slice(0,4); track $index) {
-            <td>{{store.getValue(item, field) }}</td>
+            @for (field of store.currentFields().slice(0,4); track $index) {
+            <td>{{store.getValue(item, field.path)}}</td>
             }
           </tr>
           }

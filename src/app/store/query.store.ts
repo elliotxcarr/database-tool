@@ -14,6 +14,7 @@ import { withQueryEffects } from './query.effects';
 import { withQueryReducer } from './query.reducer';
 import {
   CONDITIONS_DICT,
+  Field,
   OBJECT_ID_FIELDS,
   USER_FIELDS_DICT,
   VESSEL_FIELDS_DICT,
@@ -35,15 +36,15 @@ export const QueryStore = signalStore(
     _dispatcher: inject(Dispatcher),
   })),
   withComputed((store) => {
-    const currentFields = computed<Record<string, string>>(() => {
+    const currentFields = computed<Field[]>(() => {
       if (store.db() === 'user') return USER_FIELDS_DICT;
       if (store.db() === 'vessel') return VESSEL_FIELDS_DICT;
-      return {};
+      return [] as Field[];
     });
     const conditions = computed(() => CONDITIONS_DICT);
     return {
       currentFields,
-      currentFieldOptions: computed(() => Object.keys(currentFields())),
+      currentFieldOptions: computed(() => Array.from(currentFields().map(a => a.label))),
       conditions,
       conditionOptions: computed(() => Object.keys(conditions())),
     };
@@ -67,10 +68,10 @@ export const QueryStore = signalStore(
       return 'Value';
     },
 
-    getValue: (obj: any, path: string) => {
-      return store.currentFields()[path]
+    getValue(item: any, path: string) {
+      return path
         .split('.')
-        .reduce((o, key) => (o ? o[key] : undefined), obj);
+        .reduce((o, key) => (o ? o[key] : undefined), item)
     },
 
     runClicked: (): void => {

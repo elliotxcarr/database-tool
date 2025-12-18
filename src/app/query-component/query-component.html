@@ -11,8 +11,8 @@
       class="bg-gray-100 rounded-sm p-1 max-w-30"
       [ngClass]="{'w-20': !store.isFirstStatement($index)}"
       [(ngModel)]="query.field">
-      @for (option of store.currentFieldOptions(); track $index) {
-      <option [value]="store.currentFields()[option]">{{option}}</option>
+      @for (option of store.currentFields(); track $index) {
+      <option [value]="option.path">{{option.label}}</option>
       }
     </select>
     <select class="bg-gray-100 rounded-sm p-1" [(ngModel)]="query.condition">
