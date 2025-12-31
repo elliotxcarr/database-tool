@@ -1,0 +1,28 @@
+@let record =  store.selectedRecord();
+
+  <div class="flex flex-col p-6"
+    animate.enter="enter-animation">
+    <div class="border-b ">
+      <button class="bg-gray-200 hover:cursor-pointer p-1 rounded-md my-2" (click)="store.clearSelected()">Back</button>
+      <h1 class="text-xl font-semibold text-gray-800">
+        Record Details
+      </h1>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <tbody class="divide-y">
+          @for (field of store.recordFields(); track $index) {
+            <tr>
+            <th class="w-full px-3 py-2 bg-gray-100 text-left font-medium text-gray-600">
+              {{field}}
+            </th>
+            <td class="px-3 py-2 text-gray-800 overflow-hidden whitespace-nowrap text-ellipsis max-w-115">
+              {{record[field]}}
+            </td>
+          </tr>
+          }
+          
+        </tbody>
+      </table>
+    </div>
+  </div>

@@ -1,4 +1,8 @@
-<div class="flex flex-row w-full h-screen">
+<div class="flex flex-row w-full h-screen overflow-hidden">
   <app-query-component class=" w-3/5"/>
-  <app-results-list class=" w-2/3"/>
+    @if(store.selectedRecord()) {
+      <app-view-record class="w-2/3 [scrollbar-width:none]"/>
+    }@else {
+      <app-results-list class="w-2/3" />
+    }
 </div>

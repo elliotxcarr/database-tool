@@ -1,7 +1,7 @@
 import { inject } from "@angular/core";
 import { signalStoreFeature, type } from "@ngrx/signals";
 import { Dispatcher, Events, withEffects } from "@ngrx/signals/events";
-import { queryEvents, QueryStore } from "./query.store";
+import { queryEvents } from "./query.store";
 import { switchMap } from "rxjs";
 import { QueryService } from "../../services/queryservice";
 import {tapResponse} from "@ngrx/operators"

@@ -1,0 +1,20 @@
+@keyframes slide-fade {
+  from {
+    transform: translateX(190px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+:host{
+  display: block;
+}
+
+.enter-animation {
+  animation: slide-fade 0.7s;
+}
+
+.enter-container {
+  width: calc(2/3 * 100%);
+}

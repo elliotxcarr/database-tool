@@ -6,6 +6,12 @@ enum DataType {
   arr = 'array'
 }
 
+export interface Field{
+  label: string;
+  path: string;
+  type: string;
+}
+
 export const CONDITIONS_DICT: Record<string, string> = {
   'Contains': 'contains',
   'Equals' : 'equals',
@@ -35,11 +41,6 @@ export const USER_FIELDS_DICT: Field[] = [
     type: DataType.str
   },
   {
-    label: 'Email',
-    path: 'email',
-    type: DataType.str
-  },
-  {
     label: 'Role',
     path: 'role',
     type: DataType.str
@@ -61,12 +62,6 @@ export const USER_FIELDS_DICT: Field[] = [
   },
 ]
 
-export interface Field{
-  label: string;
-  path: string;
-  type: string;
-}
-
 export const VESSEL_FIELDS_DICT: Field[] = [
   {
     label: 'ID',
@@ -84,16 +79,6 @@ export const VESSEL_FIELDS_DICT: Field[] = [
     type: DataType.str
   },
   {
-    label: 'Has Incomplete Vessel Report',
-    path: 'has_incomplete_vessel_report',
-    type: DataType.bool
-  },
-  {
-    label: 'Has Incomplete Engine Report',
-    path: 'has_incomplete_engine_report',
-    type: DataType.bool
-  },
-  {
     label: 'Client',
     path: 'client',
     type: DataType.objId
@@ -102,6 +87,16 @@ export const VESSEL_FIELDS_DICT: Field[] = [
     label: 'Navtor ID',
     path: 'navtor_vessel_id',
     type: DataType.num
+  },
+  {
+    label: 'Has Incomplete Vessel Report',
+    path: 'has_incomplete_vessel_report',
+    type: DataType.bool
+  },
+  {
+    label: 'Has Incomplete Engine Report',
+    path: 'has_incomplete_engine_report',
+    type: DataType.bool
   },
   {
     label: 'Report No.',
@@ -136,3 +131,11 @@ export const VESSEL_FIELDS_DICT: Field[] = [
 ]
 
 export const OBJECT_ID_FIELDS= ['client', '_id', 'vessels']
+
+export const DATABASES: Record<string, string> = {
+  'User':'user',
+  'Vessel':'vessel',
+  'Report':'report'
+}
+
+export const ENVS = ['LOCAL', 'DEV', 'QA'];

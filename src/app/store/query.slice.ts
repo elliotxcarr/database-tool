@@ -9,6 +9,7 @@ export interface QuerySlice {
   db: string,
   env: string;
   results: any[];
+  selectedRecord: any;
   error: string
 }
 
@@ -24,7 +25,8 @@ export interface Result {
 export const initialQuerySlice: QuerySlice = {
   queries: [{field:'', condition: '', value:''}],
   db: 'user',
-  env: 'LOCAL',
+  env: 'Local',
   results: [],
+  selectedRecord: null,
   error: ''
 }

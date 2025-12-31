@@ -14,8 +14,9 @@ import { withQueryEffects } from './query.effects';
 import { withQueryReducer } from './query.reducer';
 import {
   CONDITIONS_DICT,
+  DATABASES,
+  ENVS,
   Field,
-  OBJECT_ID_FIELDS,
   USER_FIELDS_DICT,
   VESSEL_FIELDS_DICT,
 } from '../data/dbFields';
@@ -42,11 +43,19 @@ export const QueryStore = signalStore(
       return [] as Field[];
     });
     const conditions = computed(() => CONDITIONS_DICT);
+    const recordFields = computed(() => Object.keys(store.selectedRecord() || {}));
+    const dbs = computed(() => DATABASES);
+    const envs = computed(() => ENVS);
     return {
+      dbs,
+      dbOptions: computed(() => Object.keys(dbs())),
+      recordFields,
+      envs,
       currentFields,
       currentFieldOptions: computed(() => Array.from(currentFields().map(a => a.label))),
       conditions,
       conditionOptions: computed(() => Object.keys(conditions())),
+      fieldByPath: computed(() => Object.fromEntries(currentFields().map(a => [a.path, a])))
     };
   }),
   withQueryEffects(),
@@ -60,12 +69,10 @@ export const QueryStore = signalStore(
     addStatement: (): void =>
       patchState(store, { queries: [...store.queries(), { field: '', condition: '', value: '' }] }),
 
-    needsObjId: (field: string) => OBJECT_ID_FIELDS.includes(field),
-
     getValuePlaceholder: (query: QueryRow): string => {
-      if (query.condition === 'exists') return 'True/False';
-      if (OBJECT_ID_FIELDS.includes(query.field)) return 'ObjectID';
-      return 'Value';
+      const field = store.fieldByPath()[query.field];
+      if(query.condition === 'exists') return 'True/False'
+      return field?.type
     },
 
     getValue(item: any, path: string) {
@@ -73,7 +80,28 @@ export const QueryStore = signalStore(
         .split('.')
         .reduce((o, key) => (o ? o[key] : undefined), item)
     },
-
+    setDb: (event: string) => { 
+      patchState(store, {
+        db: event,
+        results: [],
+        queries: [{} as QueryRow],
+        selectedRecord: null
+      })
+    },
+    setEnv: (event: string) => {
+      patchState(store, {
+        env: event,
+        results: [],
+        queries: [{} as QueryRow],
+        selectedRecord: null
+      })
+    },
+    recordSelected: (record: any): void => {
+      patchState(store, {selectedRecord: record})
+    },
+    clearSelected: (): void => {
+      patchState(store, {selectedRecord: null})
+    },
     runClicked: (): void => {
       patchState(store, { error: '' });
       const body = {

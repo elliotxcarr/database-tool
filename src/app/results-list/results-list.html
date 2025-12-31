@@ -17,7 +17,7 @@
       <table class="min-w-full border-collapse">
         <tbody class="text-gray-700 overflow-y-scroll max-h-screen">
           @for (item of store.results(); track $index) {
-          <tr class="border-b hover:bg-gray-50 hover:cursor-pointer">
+          <tr class="border-b hover:bg-gray-50 hover:cursor-pointer" (click)="store.recordSelected(item)">
             @for (field of store.currentFields().slice(0,4); track $index) {
             <td>{{store.getValue(item, field.path)}}</td>
             }
