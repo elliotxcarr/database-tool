@@ -3,6 +3,7 @@ import {
   signalStore,
   type,
   withComputed,
+  withHooks,
   withMethods,
   withProps,
   withState,
@@ -55,7 +56,7 @@ export const QueryStore = signalStore(
       currentFieldOptions: computed(() => Array.from(currentFields().map(a => a.label))),
       conditions,
       conditionOptions: computed(() => Object.keys(conditions())),
-      fieldByPath: computed(() => Object.fromEntries(currentFields().map(a => [a.path, a])))
+      fieldByPath: computed(() => Object.fromEntries(currentFields().map(a => [a.path, a]))),
     };
   }),
   withQueryEffects(),
@@ -96,6 +97,7 @@ export const QueryStore = signalStore(
         selectedRecord: null
       })
     },
+    addProjectField: (event: Field[]) => patchState(store, {fieldsToProject : event}),
     recordSelected: (record: any): void => {
       patchState(store, {selectedRecord: record})
     },
@@ -112,5 +114,10 @@ export const QueryStore = signalStore(
       };
       store._dispatcher.dispatch(queryEvents.runQuery(body));
     },
-  }))
+  })),
+  withHooks({
+    onInit(store) {
+      patchState(store, {fieldsToProject: store.currentFields().slice(0,4)})
+    }
+  })
 );

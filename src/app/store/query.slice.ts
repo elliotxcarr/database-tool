@@ -1,3 +1,5 @@
+import { Field } from "../data/dbFields";
+
 export interface QueryRow {
   field: string;
   condition: string;
@@ -10,7 +12,8 @@ export interface QuerySlice {
   env: string;
   results: any[];
   selectedRecord: any;
-  error: string
+  error: string;
+  fieldsToProject: Field[]
 }
 
 export interface reqBody {
@@ -28,5 +31,6 @@ export const initialQuerySlice: QuerySlice = {
   env: 'Local',
   results: [],
   selectedRecord: null,
-  error: ''
+  error: '',
+  fieldsToProject: [],
 }
