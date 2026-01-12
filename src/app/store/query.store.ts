@@ -97,7 +97,7 @@ export const QueryStore = signalStore(
         selectedRecord: null
       })
     },
-    addProjectField: (event: Field[]) => patchState(store, {fieldsToProject : event}),
+    addProjectField: (values?: Field[]) => {if(values) patchState(store, {fieldsToProject : values})},
     recordSelected: (record: any): void => {
       patchState(store, {selectedRecord: record})
     },

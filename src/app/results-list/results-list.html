@@ -1,15 +1,12 @@
 <div class="flex flex-col w-full h-full bg-white p-6 ">
   <div class="flex items-center justify-between mb-4">
     <h2 class="text-2xl font-semibold">Query Results</h2>
-    <label>Project:
-      <select class="bg-gray-200" multiple
-      [ngModel]="store.fieldsToProject()"
-      (ngModelChange)="store.addProjectField($event)">
-      @for (item of store.currentFields(); track $index) {
-        <option [value]="item">{{item.label}}</option>
-      }
-    </select>
-    </label>
+    @if (store.results().length > 0){
+      <div class="flex flex-row">
+          <label>Project:  </label><br>
+          <app-multi-select/>
+      </div>
+    }
     <span class="text-gray-500 text-sm">{{store.results().length}} records found</span>
   </div>
   <div class="overflow-x-auto [scrollbar-width:none]">

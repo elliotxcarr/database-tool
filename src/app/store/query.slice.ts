@@ -13,7 +13,7 @@ export interface QuerySlice {
   results: any[];
   selectedRecord: any;
   error: string;
-  fieldsToProject: Field[]
+  fieldsToProject: Field[] | undefined
 }
 
 export interface reqBody {
