@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { QueryStore } from '../store/query.store';
+import { QueryStore } from '../store/query/query.store';
+import { ResultsStore } from '../store/results/results.store';
 
 @Component({
   selector: 'app-view-record',
@@ -8,5 +9,5 @@ import { QueryStore } from '../store/query.store';
   styleUrl: './view-record.css',
 })
 export class ViewRecord {
-  readonly store = inject(QueryStore);
+  readonly _resultsStore = inject(ResultsStore);
 }

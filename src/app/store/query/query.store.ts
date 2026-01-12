@@ -20,7 +20,7 @@ import {
   Field,
   USER_FIELDS_DICT,
   VESSEL_FIELDS_DICT,
-} from '../data/dbFields';
+} from '../../data/dbFields';
 
 export const queryEvents = eventGroup({
   source: 'Query',
@@ -44,18 +44,16 @@ export const QueryStore = signalStore(
       return [] as Field[];
     });
     const conditions = computed(() => CONDITIONS_DICT);
-    const recordFields = computed(() => Object.keys(store.selectedRecord() || {}));
     const dbs = computed(() => DATABASES);
     const envs = computed(() => ENVS);
     return {
       dbs,
       dbOptions: computed(() => Object.keys(dbs())),
-      recordFields,
       envs,
       currentFields,
       currentFieldOptions: computed(() => Array.from(currentFields().map(a => a.label))),
       conditions,
-      conditionOptions: computed(() => Object.keys(conditions())),
+      conditionOptions: computed(() => Object.keys(CONDITIONS_DICT)),
       fieldByPath: computed(() => Object.fromEntries(currentFields().map(a => [a.path, a]))),
     };
   }),
@@ -75,12 +73,6 @@ export const QueryStore = signalStore(
       if(query.condition === 'exists') return 'True/False'
       return field?.type
     },
-
-    getValue(item: any, path: string) {
-      return path
-        .split('.')
-        .reduce((o, key) => (o ? o[key] : undefined), item)
-    },
     setDb: (event: string) => { 
       patchState(store, {
         db: event,
@@ -97,13 +89,7 @@ export const QueryStore = signalStore(
         selectedRecord: null
       })
     },
-    addProjectField: (values?: Field[]) => {if(values) patchState(store, {fieldsToProject : values})},
-    recordSelected: (record: any): void => {
-      patchState(store, {selectedRecord: record})
-    },
-    clearSelected: (): void => {
-      patchState(store, {selectedRecord: null})
-    },
+    
     runClicked: (): void => {
       patchState(store, { error: '' });
       const body = {
@@ -115,9 +101,5 @@ export const QueryStore = signalStore(
       store._dispatcher.dispatch(queryEvents.runQuery(body));
     },
   })),
-  withHooks({
-    onInit(store) {
-      patchState(store, {fieldsToProject: store.currentFields().slice(0,4)})
-    }
-  })
+  
 );

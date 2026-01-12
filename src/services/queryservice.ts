@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { QuerySlice, reqBody } from '../app/store/query.slice';
+import { reqBody } from '../app/store/query/query.slice';
 import { Observable } from 'rxjs';
 
 @Injectable({

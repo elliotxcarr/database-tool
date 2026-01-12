@@ -1,4 +1,4 @@
-import { Field } from "../data/dbFields";
+import { Field } from "../../data/dbFields";
 
 export interface QueryRow {
   field: string;

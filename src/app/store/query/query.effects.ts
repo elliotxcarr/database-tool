@@ -3,7 +3,7 @@ import { signalStoreFeature, type } from "@ngrx/signals";
 import { Dispatcher, Events, withEffects } from "@ngrx/signals/events";
 import { queryEvents } from "./query.store";
 import { switchMap } from "rxjs";
-import { QueryService } from "../../services/queryservice";
+import { QueryService } from "../../../services/queryservice";
 import {tapResponse} from "@ngrx/operators"
 import { HttpErrorResponse } from "@angular/common/http";
 

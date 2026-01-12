@@ -2,8 +2,9 @@ import { afterRenderEffect, ChangeDetectionStrategy, Component, computed, inject
 import {Listbox, Option} from '@angular/aria/listbox'
 import { Combobox, ComboboxInput, ComboboxPopup, ComboboxPopupContainer } from '@angular/aria/combobox';
 import { OverlayModule} from '@angular/cdk/overlay'
-import { QueryStore } from '../store/query.store';
+import { QueryStore } from '../store/query/query.store';
 import { Field } from '../data/dbFields';
+import { ResultsStore } from '../store/results/results.store';
 @Component({
   selector: 'app-multi-select',
   imports: [
@@ -21,7 +22,8 @@ import { Field } from '../data/dbFields';
 })
 export class MultiSelect {
 
-  readonly store = inject(QueryStore);
+  readonly _resultsStore = inject(ResultsStore);
+  readonly _queryStore = inject(QueryStore);
 
  /** The combobox listbox popup. */
   listbox = viewChild<Listbox<Field>>(Listbox);
@@ -60,8 +62,8 @@ export class MultiSelect {
     });
 
     effect(() => {
-      this.store.addProjectField(
-        this.values().length > 0 ? this.values() : this.store.currentFields().slice(0,4))
+      this._resultsStore.setProjectedFields(
+        this.values().length > 0 ? this.values() : this._queryStore.currentFields().slice(0,4))
     })
   }
 }

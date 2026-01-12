@@ -1,19 +1,19 @@
 <div class="flex flex-col w-full h-full bg-white p-6 ">
   <div class="flex items-center justify-between mb-4">
     <h2 class="text-2xl font-semibold">Query Results</h2>
-    @if (store.results().length > 0){
+    @if (_resultsStore.results().length > 0){
       <div class="flex flex-row">
           <label>Project:  </label><br>
           <app-multi-select/>
       </div>
     }
-    <span class="text-gray-500 text-sm">{{store.results().length}} records found</span>
+    <span class="text-gray-500 text-sm">{{_resultsStore.results().length}} records found</span>
   </div>
   <div class="overflow-x-auto [scrollbar-width:none]">
     <table class="min-w-full text-left border-collapse">
       <thead class="bg-white sticky top-0 z-10">
         <tr class="text-gray-700 border-b">
-          @for (item of store.fieldsToProject(); track $index) {
+          @for (item of _resultsStore.fieldsToProject(); track $index) {
           <th class="py-3 px-2 font-semibold max-w-8">{{item.label}}</th>
         }
         </tr>
@@ -22,10 +22,10 @@
     <div class="max-h-screen overflow-y-auto">
       <table class="min-w-full border-collapse">
         <tbody class="text-gray-700 overflow-y-scroll max-h-screen">
-          @for (item of store.results(); track $index) {
-          <tr class="border-b hover:bg-gray-50 hover:cursor-pointer" (click)="store.recordSelected(item)">
-            @for (field of store.fieldsToProject(); track $index) {
-            <td>{{store.getValue(item, field.path)}}</td>
+          @for (item of _resultsStore.results(); track $index) {
+          <tr class="border-b hover:bg-gray-50 hover:cursor-pointer" (click)="_resultsStore.recordSelected(item)">
+            @for (field of _resultsStore.fieldsToProject(); track $index) {
+            <td>{{_resultsStore.getValue(item, field.path)}}</td>
             }
           </tr>
           }
