@@ -29,7 +29,7 @@ export const QueryStore = signalStore(
   withProps((_) => ({
     _dispatcher: inject(Dispatcher),
   })),
-  withComputed((store) => {
+  withComputed((_) => {
     const conditions = computed(() => CONDITIONS_DICT);
         const mainStore = inject(MainStore)
     const currentFields = computed(() => mainStore.currentFields())
@@ -58,8 +58,8 @@ export const QueryStore = signalStore(
       runClicked: (): void => {
         mainStore.clearError()
         const body = {
-          db: store.db(),
-          env: store.env(),
+          db: mainStore.db(),
+          env: mainStore.env(),
           groupType: 'AND',
           conditions: store.queries(),
         };

@@ -1,7 +1,9 @@
-import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from "@ngrx/signals";
+import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from "@ngrx/signals";
 import { DATABASES, ENVS, Field, USER_FIELDS_DICT, VESSEL_FIELDS_DICT } from "../../data/dbFields";
-import { computed } from "@angular/core";
+import { computed, inject } from "@angular/core";
 import { HttpErrorResponse } from "@angular/common/http";
+import { Dispatcher } from "@ngrx/signals/events";
+import { queryEvents } from "../query/query.store";
 
 export interface MainSlice {
   env: string;
@@ -23,6 +25,9 @@ export const initialMainSlice: MainSlice = {
 export const MainStore = signalStore(
   {providedIn: 'root'},
   withState(initialMainSlice),
+  withProps((_) => ({
+    _dispatcher: inject(Dispatcher)
+  })),
   withComputed(store => {
     const currentFields = computed<Field[]>(() => {
       if(store.db() === 'user') return USER_FIELDS_DICT;
@@ -54,10 +59,10 @@ export const MainStore = signalStore(
         })
       },
       getValue(item: any, path: string) {
-      return path
-        .split('.')
-        .reduce((o, key) => (o ? o[key] : undefined), item)
-    },
+        return path
+          .split('.')
+          .reduce((o, key) => (o ? o[key] : undefined), item)
+      },
     setProjectedFields: (values?: Field[]) => patchState(store, {fieldsToProject : values}),
     setResults: (results: any) => patchState(store, {results: results}),
     setError: (err: HttpErrorResponse) => patchState(store, {error: err.error.message}),

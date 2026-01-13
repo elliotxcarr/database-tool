@@ -33,9 +33,8 @@ export class MultiSelect {
 
   /** The string that is displayed in the combobox. */
   displayValue = computed(() => {
-    //this.store.addProjectField(this.listbox()?.values())
     if (this.values().length === 0) {
-      return 'Select a label';
+      return 'Select fields';
     }
     if (this.values().length === 1) {
       return this.values()[0].label;

@@ -1,0 +1,22 @@
+.sub-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.key {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.key.clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.caret {
+  display: inline-block;
+  width: 1em;
+  color: #666;
+  
+}
+

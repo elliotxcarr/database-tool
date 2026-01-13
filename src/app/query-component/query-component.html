@@ -2,7 +2,7 @@
   <div class="p-3">
     <div class="flex flex-row justify-between">
     <h1 class="text-2xl font-semibold">Query Conditions</h1>
-        @if (store.env() === 'QA') {
+        @if (_mainStore.env() === 'QA') {
           <div 
             class="text-amber-600 text-md bg-gray-300 rounded-lg p-1
             ease-in-out duration-300 ">
@@ -14,7 +14,7 @@
       <div>
         Database: 
         <select class="bg-gray-100 rounded-sm p-1 max-w-30" 
-          [ngModel]="store.db()" 
+          [ngModel]="_mainStore.db()" 
           (ngModelChange)="_mainStore.setDb($event)">
           @for (db of _mainStore.dbOptions(); track $index) {
             <option [value]="_mainStore.dbs()[db]" >{{db}}</option>
@@ -24,7 +24,7 @@
       <div>
         Environment: 
         <select class="bg-gray-100 rounded-sm p-1 max-w-30" 
-          [ngModel]="store.env()" 
+          [ngModel]="_mainStore.env()" 
           (ngModelChange)="_mainStore.setEnv($event)">
           @for (env of _mainStore.envs(); track $index) {
             <option [value]="env" >{{env}}</option>
@@ -33,44 +33,44 @@
       </div>
     </div>
   </div>
-  @for (query of store.queries(); track $index) {
+  @for (query of _queryStore.queries(); track $index) {
   <div class="flex flex-row justify-between py-2 mx-2">
-    @if (!store.isFirstStatement($index)) {
+    @if (!_queryStore.isFirstStatement($index)) {
     <div class="text-center self-center ml-2">AND</div>
     }
     <select 
       class="bg-gray-100 rounded-sm p-1 max-w-30"
-      [ngClass]="{'w-20': !store.isFirstStatement($index)}"
+      [ngClass]="{'w-20': !_queryStore.isFirstStatement($index)}"
       [(ngModel)]="query.field">
       @for (option of _mainStore.currentFields(); track $index) {
       <option [value]="option.path">{{option.label}}</option>
       }
     </select>
     <select class="bg-gray-100 rounded-sm p-1" [(ngModel)]="query.condition">
-      @for (option of store.conditionOptions(); track $index) {
-      <option [value]="store.conditions()[option]">{{option}}</option>
+      @for (option of _queryStore.conditionOptions(); track $index) {
+      <option [value]="_queryStore.conditions()[option]">{{option}}</option>
       }
     </select>
     <input 
       type="text"
-      placeholder="{{store.getValuePlaceholder(query)}}"
+      placeholder="{{_queryStore.getValuePlaceholder(query)}}"
       [(ngModel)]="query.value"
       class="w-3/5 bg-gray-100 rounded-sm p-1"/>
-    @if (store.queries().length >1) {
+    @if (_queryStore.queries().length >1) {
     <button 
       class="text-red-700 hover:cursor-pointer hover:bg-white rounded-lg" 
-      (click)="store.removeStatement($index)">
+      (click)="_queryStore.removeStatement($index)">
       <img src="delete.svg" class="" />
     </button>
     }
   </div>
   }
-  <button class="m-2 mx-5 p-1 rounded-md bg-gray-100  hover:cursor-pointer hover:bg-gray-300" (click)="store.addStatement()">
+  <button class="m-2 mx-5 p-1 rounded-md bg-gray-100  hover:cursor-pointer hover:bg-gray-300" (click)="_queryStore.addStatement()">
     + Add Condition
   </button>
   <button 
     class="p-2 bg-blue-500 text-md text-white self-end rounded-sm drop-shadow-lg hover:cursor-pointer"
-    (click)="store.runClicked()">
+    (click)="_queryStore.runClicked()">
     Run Query
   </button>
   @if (_mainStore.error()) {

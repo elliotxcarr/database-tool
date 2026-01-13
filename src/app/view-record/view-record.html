@@ -1,6 +1,6 @@
 @let record =  _mainStore.selectedRecord();
 
-  <div class="flex flex-col p-6"
+  <div class="flex flex-col p-6 overflow-y-scroll h-screen"
     animate.enter="enter-animation">
     <div class="border-b ">
       <button class="bg-gray-200 hover:cursor-pointer p-1 rounded-md my-2" (click)="_mainStore.clearSelected()">Back</button>
@@ -17,8 +17,27 @@
               {{field}}
             </th>
             <td class="px-3 py-2 text-gray-800 overflow-hidden whitespace-nowrap text-ellipsis max-w-115">
-              {{record[field]}}
-            </td>
+                @if (field === 'features') {
+                  <app-deep-table
+                    [nodes]="record[field] | deepObject">
+                  </app-deep-table>
+                } 
+                @else if (field === 'vessels' ) {
+                    <span class="caret hover:cursor-pointer" (click)="toggleVessels()">
+                      {{ vesselsExpanded ?  '▼' : '▶' }} <span class="font-semibold">Vessels</span>
+                    </span>
+                  @if (vesselsExpanded) {
+                    <ul>
+                      @for (item of record[field]; track $index) {
+                        <li>{{item}}</li>
+                      }
+                    </ul>
+                  }
+                }
+                @else {
+                  {{ record[field] }}
+                }
+              </td>
           </tr>
           }
           

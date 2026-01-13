@@ -1,0 +1,30 @@
+<table class="sub-table">
+  @for (node of nodes; track node) {
+    <tr class="flex flex-row gap-1" [ngClass]="{'flex-col': !node.children}">
+      <td
+        class="key font-semibold"
+        [class.clickable]="node.children"
+        (click)="toggle(node)"
+      >
+        @if (node.children) {
+          <span class="caret hover:cursor-pointer" >
+            {{ isExpanded(node) ?  '▼' : '▶' }}
+          </span>
+        }
+        {{ node.key }}:
+      </td>
+      <td class="value flex flex-col ">
+        @if (node.children) {
+          @if (isExpanded(node)) {
+            <br>
+            <app-deep-table [nodes]="node.children"></app-deep-table>
+          }
+        } @else {
+          <div class="flex flex-row">
+            {{node.value}}
+          </div>
+        }
+      </td>
+    </tr>
+    }
+</table>

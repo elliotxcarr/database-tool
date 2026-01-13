@@ -11,6 +11,6 @@ import { MainStore } from '../store/main/main.store';
   styleUrl: './query-component.css',
 })
 export class QueryComponent {
-  readonly store = inject(QueryStore);
+  readonly _queryStore = inject(QueryStore);
   readonly _mainStore = inject(MainStore);
 }
