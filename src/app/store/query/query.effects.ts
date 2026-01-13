@@ -6,6 +6,7 @@ import { switchMap } from "rxjs";
 import { QueryService } from "../../../services/queryservice";
 import {tapResponse} from "@ngrx/operators"
 import { HttpErrorResponse } from "@angular/common/http";
+import { MainStore } from "../main/main.store";
 
 export const withQueryEffects = <_>() => 
   signalStoreFeature(
@@ -13,18 +14,17 @@ export const withQueryEffects = <_>() =>
     withEffects(_ => {
       const _events = inject(Events);
       const _queryService = inject(QueryService);
-      const _dispatcher = inject(Dispatcher)
+      const _mainStore = inject(MainStore);
       return {
         runQuery$: _events.on(queryEvents.runQuery).pipe(
           switchMap(({payload: req}) => _queryService.runQuery(req).pipe(
             tapResponse({
               next: (res:any[]) =>{
-                _dispatcher.dispatch(queryEvents.querySuccess(res))
+                _mainStore.setResults(res)
               },
               error: (err: HttpErrorResponse) => {
-                _dispatcher.dispatch(queryEvents.queryFailiure(err.error.message))
+                _mainStore.setError(err)
               }
-                
             })
           ))
         )

@@ -2,9 +2,8 @@ import { afterRenderEffect, ChangeDetectionStrategy, Component, computed, inject
 import {Listbox, Option} from '@angular/aria/listbox'
 import { Combobox, ComboboxInput, ComboboxPopup, ComboboxPopupContainer } from '@angular/aria/combobox';
 import { OverlayModule} from '@angular/cdk/overlay'
-import { QueryStore } from '../store/query/query.store';
 import { Field } from '../data/dbFields';
-import { ResultsStore } from '../store/results/results.store';
+import { MainStore } from '../store/main/main.store';
 @Component({
   selector: 'app-multi-select',
   imports: [
@@ -21,9 +20,7 @@ import { ResultsStore } from '../store/results/results.store';
   styleUrl: './multi-select.css',
 })
 export class MultiSelect {
-
-  readonly _resultsStore = inject(ResultsStore);
-  readonly _queryStore = inject(QueryStore);
+  readonly _mainStore = inject(MainStore);
 
  /** The combobox listbox popup. */
   listbox = viewChild<Listbox<Field>>(Listbox);
@@ -46,7 +43,6 @@ export class MultiSelect {
     return `${this.values()[0].label} + ${this.values().length - 1} more`;
   });
 
-  
   constructor() {
     // Scrolls to the active item when the active option changes.
     // The slight delay here is to ensure animations are done before scrolling.
@@ -62,8 +58,8 @@ export class MultiSelect {
     });
 
     effect(() => {
-      this._resultsStore.setProjectedFields(
-        this.values().length > 0 ? this.values() : this._queryStore.currentFields().slice(0,4))
+      this._mainStore.setProjectedFields(
+        this.values().length > 0 ? this.values() : this._mainStore.currentFields().slice(0,4))
     })
   }
 }

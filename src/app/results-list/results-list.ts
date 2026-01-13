@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { QueryStore } from '../store/query/query.store';
 import { FormsModule } from '@angular/forms';
 import { MultiSelect } from '../multi-select/multi-select';
-import { ResultsStore } from '../store/results/results.store';
+import { MainStore } from '../store/main/main.store';
 
 @Component({
   selector: 'app-results-list',
@@ -11,5 +10,5 @@ import { ResultsStore } from '../store/results/results.store';
   styleUrl: './results-list.css',
 })
 export class ResultsList {
-  readonly _resultsStore = inject(ResultsStore);
+  readonly _mainStore = inject(MainStore);
 }

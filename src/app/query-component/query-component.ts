@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { QueryStore } from '../store/query/query.store';
 import { FormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
-import { MultiSelect } from '../multi-select/multi-select';
+import { MainStore } from '../store/main/main.store';
 
 @Component({
   selector: 'app-query-component',
@@ -12,4 +12,5 @@ import { MultiSelect } from '../multi-select/multi-select';
 })
 export class QueryComponent {
   readonly store = inject(QueryStore);
+  readonly _mainStore = inject(MainStore);
 }

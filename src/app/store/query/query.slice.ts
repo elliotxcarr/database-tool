@@ -10,10 +10,6 @@ export interface QuerySlice {
   queries: QueryRow[];
   db: string,
   env: string;
-  results: any[];
-  selectedRecord: any;
-  error: string;
-  fieldsToProject: Field[] | undefined
 }
 
 export interface reqBody {
@@ -21,16 +17,8 @@ export interface reqBody {
   conditions: QueryRow[]
 }
 
-export interface Result {
-  records:[]
-}
-
 export const initialQuerySlice: QuerySlice = {
   queries: [{field:'', condition: '', value:''}],
   db: 'user',
   env: 'Local',
-  results: [],
-  selectedRecord: null,
-  error: '',
-  fieldsToProject: [],
 }
